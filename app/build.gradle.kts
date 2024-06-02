@@ -1,5 +1,7 @@
 plugins {
     id("java")
+    application
+    kotlin("jvm") version "2.0.0"
 }
 
 group = "hexlet.code"
@@ -10,10 +12,17 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = "hexlet.code.App"
+}
+kotlin {
+    jvmToolchain(21)
 }
