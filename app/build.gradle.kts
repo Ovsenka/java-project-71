@@ -1,6 +1,7 @@
 plugins {
     id("java")
     application
+    checkstyle
     kotlin("jvm") version "2.0.0"
 }
 
