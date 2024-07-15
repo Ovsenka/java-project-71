@@ -6,3 +6,6 @@ run-dist-help:
 
 run-dist-version:
 	./build/install/app/bin/app -V
+
+run-dist-test:
+	./build/install/app/bin/app ~/test1.json ~/test2.json
