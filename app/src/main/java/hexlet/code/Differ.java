@@ -15,9 +15,9 @@ public class Differ {
     public static String generate(Path filepath, Path filepath2) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> mapFile = mapper.readValue(new File(filepath.toString()),
-                new TypeReference<>() {});
+                new TypeReference<>() { });
         Map<String, Object> mapFile2 = mapper.readValue(new File(filepath2.toString()),
-                new TypeReference<>() {});
+                new TypeReference<>() { });
         return compareFilesProperties(mapFile, mapFile2);
     }
 
@@ -30,8 +30,7 @@ public class Differ {
                 Object differFileKeyValue = mapFile2.get(key);
                 if (differFileKeyValue.equals(value)) {
                     differStr.append("\n\t").append(key).append(": ").append(value);
-                }
-                else {
+                } else {
                     differStr.append("\n\t- ").append(key).append(": ").append(value.toString());
                     differStr.append("\n\t+ ").append(key).append(": ").append(differFileKeyValue);
                 }
