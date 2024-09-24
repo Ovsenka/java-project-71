@@ -1,28 +1,45 @@
+import static hexlet.code.Differ.generate;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
-import hexlet.code.Differ;
+import java.nio.file.Paths;
 
 public class DifferTests {
 
-    private ClassLoader classLoader = null;
-
+    private static String expectedDifferents = "";
     @BeforeAll
-    public void init() {
-        classLoader = getClass().getClassLoader();
-
+    public static void init() {
+        expectedDifferents = String.join("\n\t",
+                "{",
+                "- follow: false",
+                "host: hexlet.io",
+                "- proxy: 123.234.53.22",
+                "- timeout: 50",
+                "+ timeout: 20",
+                "+ verbose: true\n}");
     }
 
     @Test
     public void jsonDiffTest() {
-        File file = new File("test1.json");
-        File file2 = new File("test2.json");
+        assertEquals(
+                generate(
+                        Paths.get("src/test/resources/test1.json").toAbsolutePath().normalize(),
+                        Paths.get("src/test/resources/test2.json").toAbsolutePath().normalize()
+                ),
+                expectedDifferents
+        );
     }
 
     @Test
     public void yamlDiffTest() {
-
+        assertEquals(
+                generate(
+                        Paths.get("src/test/resources/test1.yml").toAbsolutePath().normalize(),
+                        Paths.get("src/test/resources/test2.yml").toAbsolutePath().normalize()
+                ),
+                expectedDifferents
+        );
     }
 }

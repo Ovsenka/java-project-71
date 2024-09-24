@@ -9,9 +9,9 @@ import java.nio.file.Path;
 public class ObjectMapperFactory {
     public ObjectMapper getObjectMapper(Path filepath) {
         ObjectMapper mapper = null;
-        if (filepath.endsWith(".yml")) {
+        if (filepath.toString().endsWith(".yml")) {
             mapper = new YAMLMapper();
-        } else if (filepath.endsWith(".json")) {
+        } else if (filepath.toString().endsWith(".json")) {
             mapper = new JsonMapper();
         }
         return mapper;
