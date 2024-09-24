@@ -13,7 +13,9 @@ import java.util.TreeSet;
 
 public class Differ {
     public static String generate(Path filepath, Path filepath2) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
+        ObjectMapperFactory factory = new ObjectMapperFactory();
+        // to do: exception different file extension
+        ObjectMapper mapper = factory.getObjectMapper(filepath);
         Map<String, Object> mapFile = mapper.readValue(new File(filepath.toString()),
                 new TypeReference<>() { });
         Map<String, Object> mapFile2 = mapper.readValue(new File(filepath2.toString()),

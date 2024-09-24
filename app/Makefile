@@ -8,7 +8,10 @@ run-dist-version:
 	./build/install/app/bin/app -V
 
 run-dist-test:
-	./build/install/app/bin/app ~/test1.json ~/test2.json
+	./build/install/app/bin/app src/test/resources/test1.json src/test/resources/test2.json
+
+run-dist-test-yml:
+	./build/install/app/bin/app src/test/resources/test1.yml src/test/resources/test2.yml
 
 clean:
 	./gradlew clean
