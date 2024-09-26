@@ -1,8 +1,7 @@
 import static hexlet.code.Differ.generate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import hexlet.code.IFormatter;
-import hexlet.code.StylishFormatter;
+import hexlet.code.formatters.StylishFormatter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

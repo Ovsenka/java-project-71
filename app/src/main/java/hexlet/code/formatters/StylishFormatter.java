@@ -1,8 +1,6 @@
-package hexlet.code;
+package hexlet.code.formatters;
 
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class StylishFormatter implements IFormatter {
     @Override
