@@ -11,3 +11,6 @@
 
 #### Nested values
 [![asciicast](https://asciinema.org/a/WlpJYLWgO5ekZetBbbRoKasxU.svg)](https://asciinema.org/a/WlpJYLWgO5ekZetBbbRoKasxU)
+
+#### Plain formatter
+[![asciicast](https://asciinema.org/a/nGZ7YrO6GjPc4lnCIFTpBBQ6j.svg)](https://asciinema.org/a/nGZ7YrO6GjPc4lnCIFTpBBQ6j)
