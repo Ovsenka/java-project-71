@@ -1,43 +1,44 @@
 package hexlet.code;
 
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 
 public class Differ {
-    public static String generate(Path filepath, Path filepath2) {
+    public static Map<String, String[]> generate(Path filepath, Path filepath2) {
         Map<String, Object> mapFile = Parser.parse(filepath);
         Map<String, Object> mapFile2 = Parser.parse(filepath2);
-        return compareFilesProperties(mapFile, mapFile2);
+        return compareFiles(mapFile, mapFile2);
     }
 
-    private static String compareFilesProperties(Map<String, Object> mapFile, Map<String, Object> mapFile2) {
-        StringBuilder differStr = new StringBuilder("{");
+    private static Map<String, String[]> compareFiles(Map<String, Object> mapFile, Map<String, Object> mapFile2) {
+        //Set<> mergedKeySet = new TreeSet<>(mapFile.keySet()).addAll(mapFile2.keySet());
+        //Set<String> set = Collections.addAll();
         SortedSet<String> keys = new TreeSet<>(mapFile.keySet());
+        keys.addAll(mapFile2.keySet());
+        Map<String, String[]> diffResult = new LinkedHashMap<>();
         for (String key : keys) {
-            Object value = mapFile.get(key);
+            Object value = String.valueOf(mapFile.get(key));
             if (mapFile2.containsKey(key)) {
-                Object differFileKeyValue = mapFile2.get(key);
+                Object differFileKeyValue = String.valueOf(mapFile2.get(key));
                 if (differFileKeyValue.equals(value)) {
-                    differStr.append("\n\t").append(key).append(": ").append(value);
+                    diffResult.put(key, new String[] {"none", value.toString()});
+                } else if (!mapFile.containsKey(key)){
+                    diffResult.put(key, new String[] {"+", differFileKeyValue.toString() });
                 } else {
-                    differStr.append("\n\t- ").append(key).append(": ").append(value.toString());
-                    differStr.append("\n\t+ ").append(key).append(": ").append(differFileKeyValue);
+                    diffResult.put(key, new String[] {"-+", value.toString(), differFileKeyValue.toString() });
                 }
                 mapFile2.remove(key);
             } else {
-                differStr.append("\n\t- ").append(key).append(": ").append(value.toString());
+                diffResult.put(key, new String[] {"-", value.toString()});
             }
         }
         mapFile2.forEach((k, v) -> {
             if (!mapFile.containsKey(k)) {
-                differStr.append("\n\t+ ").append(k).append(": ").append(v);
+                diffResult.put(k, new String[] {"+", v.toString()});
             }
         });
-        differStr.append("\n}");
-        return differStr.toString();
+        return diffResult;
     }
 
 }

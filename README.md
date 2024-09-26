@@ -8,3 +8,6 @@
 [![asciicast](https://asciinema.org/a/668134.svg)](https://asciinema.org/a/668134)
 #### YAML files
 [![asciicast](https://asciinema.org/a/677461.svg)](https://asciinema.org/a/677461)
+
+#### Nested values
+[![asciicast](https://asciinema.org/a/WlpJYLWgO5ekZetBbbRoKasxU.svg)](https://asciinema.org/a/WlpJYLWgO5ekZetBbbRoKasxU)

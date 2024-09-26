@@ -6,7 +6,9 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.concurrent.Callable;
+
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true,
         description = "Compares two configuration files and shows a difference.",
@@ -14,7 +16,7 @@ import java.util.concurrent.Callable;
         )
 public class App implements Callable<Integer> {
 
-    @Option(names = { "-f", "--format" }, paramLabel = "format", description = "output format [default: stylish]")
+    @Option(names = { "-f", "--format" }, defaultValue = "stylish", paramLabel = "format", description = "output format [default: stylish]")
     private String format;
 
     @Parameters(paramLabel = "filepath1", description = "path to first file")
@@ -25,11 +27,12 @@ public class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        String diffResult = Differ.generate(
+        Map<String, String[]> diffResult = Differ.generate(
                 Paths.get(filepath).toAbsolutePath().normalize(),
                 Paths.get(filepath2).toAbsolutePath().normalize()
         );
-        System.out.println(diffResult);
+        IFormatter formatter = FormatterFactory.getFormatter(format);
+        System.out.println(formatter.format(diffResult));
         return 0;
     }
     public static void main(String[] args) {
