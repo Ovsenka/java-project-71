@@ -1,7 +1,10 @@
 package hexlet.code;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.LinkedHashMap;
 
 
 public class Differ {
@@ -23,7 +26,7 @@ public class Differ {
                 Object differFileKeyValue = String.valueOf(mapFile2.get(key));
                 if (differFileKeyValue.equals(value)) {
                     diffResult.put(key, new String[] {"none", value.toString()});
-                } else if (!mapFile.containsKey(key)){
+                } else if (!mapFile.containsKey(key)) {
                     diffResult.put(key, new String[] {"+", differFileKeyValue.toString() });
                 } else {
                     diffResult.put(key, new String[] {"-+", value.toString(), differFileKeyValue.toString() });
