@@ -24,10 +24,10 @@ jobs:
       - run: make test
         working-directory: ./app
       - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          JACOCO_SOURCE_PATH: app/src/main/java ./app/cc-test-reporter format-coverage ./app/build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
+          JACOCO_SOURCE_PATH: app/src/main/java
         with:
           coverageCommand: make -C app report
           coverageLocations: ${{github.workspace}}app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
