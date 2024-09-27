@@ -32,7 +32,7 @@ public class App implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        Map<String, String[]> diffResult = Differ.generate(
+        Map<String, Object[]> diffResult = Differ.generate(
                 Paths.get(filepath).toAbsolutePath().normalize(),
                 Paths.get(filepath2).toAbsolutePath().normalize()
         );

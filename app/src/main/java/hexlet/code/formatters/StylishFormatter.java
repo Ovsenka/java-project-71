@@ -4,10 +4,10 @@ import java.util.Map;
 
 public class StylishFormatter implements IFormatter {
     @Override
-    public String format(Map<String, String[]> differMap) {
+    public String format(Map<String, Object[]> differMap) {
         StringBuilder result = new StringBuilder("{");
         differMap.forEach((k, v) -> {
-            switch (v[0]) {
+            switch (v[0].toString()) {
                 case "none":
                     result.append("\n\t").append(k).append(": ").append(v[1]);
                     break;

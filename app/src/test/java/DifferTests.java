@@ -44,7 +44,7 @@ public class DifferTests {
 
     @Test
     public void jsonDiffTestStylish() {
-        Map<String, String[]> diff = generate(
+        Map<String, Object[]> diff = generate(
                 Paths.get("src/test/resources/test1.json").toAbsolutePath().normalize(),
                 Paths.get("src/test/resources/test2.json").toAbsolutePath().normalize()
         );
@@ -56,7 +56,7 @@ public class DifferTests {
 
     @Test
     public void yamlDiffTestStylish() {
-        Map<String, String[]> diff = generate(
+        Map<String, Object[]> diff = generate(
                 Paths.get("src/test/resources/test1.yml").toAbsolutePath().normalize(),
                 Paths.get("src/test/resources/test2.yml").toAbsolutePath().normalize()
         );

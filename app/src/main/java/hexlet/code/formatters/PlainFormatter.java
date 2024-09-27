@@ -4,18 +4,21 @@ import java.util.Map;
 
 public class PlainFormatter implements IFormatter {
     @Override
-    public String format(Map<String, String[]> differMap) {
+    public String format(Map<String, Object[]> differMap) {
         StringBuilder sb = new StringBuilder();
         differMap.forEach((k, v) -> {
-            switch (v[0]) {
+            Object keyvalue = v[1].getClass().isArray() ? "[complex value]" : v[1];
+            Object keyvalue2;
+            switch (v[0].toString()) {
                 case "+":
-                    sb.append("\nProperty '%s' was added with value: %s".formatted(k, v[1]));
+                    sb.append("\nProperty '%s' was added with value: %s".formatted(k, keyvalue));
                     break;
                 case "-":
                     sb.append("\nProperty '%s' was removed".formatted(k));
                     break;
                 case "-+":
-                    sb.append("\nProperty '%s' was updated. From %s to %s".formatted(k, v[1], v[2]));
+                    keyvalue2 = v[2].getClass().isArray() ? "[complex value]" : v[2];
+                    sb.append("\nProperty '%s' was updated. From %s to %s".formatted(k, keyvalue, keyvalue2));
                     break;
                 default:
                     break;

@@ -8,37 +8,35 @@ import java.util.LinkedHashMap;
 
 
 public class Differ {
-    public static Map<String, String[]> generate(Path filepath, Path filepath2) {
+    public static Map<String, Object[]> generate(Path filepath, Path filepath2) {
         Map<String, Object> mapFile = Parser.parse(filepath);
         Map<String, Object> mapFile2 = Parser.parse(filepath2);
         return compareFiles(mapFile, mapFile2);
     }
 
-    private static Map<String, String[]> compareFiles(Map<String, Object> mapFile, Map<String, Object> mapFile2) {
-        //Set<> mergedKeySet = new TreeSet<>(mapFile.keySet()).addAll(mapFile2.keySet());
-        //Set<String> set = Collections.addAll();
+    private static Map<String, Object[]> compareFiles(Map<String, Object> mapFile, Map<String, Object> mapFile2) {
         SortedSet<String> keys = new TreeSet<>(mapFile.keySet());
         keys.addAll(mapFile2.keySet());
-        Map<String, String[]> diffResult = new LinkedHashMap<>();
+        Map<String, Object[]> diffResult = new LinkedHashMap<>();
         for (String key : keys) {
-            Object value = String.valueOf(mapFile.get(key));
+            Object value = mapFile.get(key) == null ? "null" : mapFile.get(key);
             if (mapFile2.containsKey(key)) {
-                Object differFileKeyValue = String.valueOf(mapFile2.get(key));
+                Object differFileKeyValue = mapFile2.get(key) == null ? "null" : mapFile2.get(key);
                 if (differFileKeyValue.equals(value)) {
-                    diffResult.put(key, new String[] {"none", value.toString()});
+                    diffResult.put(key, new Object[] {"none", value});
                 } else if (!mapFile.containsKey(key)) {
-                    diffResult.put(key, new String[] {"+", differFileKeyValue.toString() });
+                    diffResult.put(key, new Object[] {"+", differFileKeyValue });
                 } else {
-                    diffResult.put(key, new String[] {"-+", value.toString(), differFileKeyValue.toString() });
+                    diffResult.put(key, new Object[] {"-+", value, differFileKeyValue });
                 }
                 mapFile2.remove(key);
             } else {
-                diffResult.put(key, new String[] {"-", value.toString()});
+                diffResult.put(key, new Object[] {"-", value});
             }
         }
         mapFile2.forEach((k, v) -> {
             if (!mapFile.containsKey(k)) {
-                diffResult.put(k, new String[] {"+", v.toString()});
+                diffResult.put(k, new Object[] {"+", v});
             }
         });
         return diffResult;

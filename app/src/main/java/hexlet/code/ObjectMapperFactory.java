@@ -7,7 +7,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.nio.file.Path;
 
 public class ObjectMapperFactory {
-    public ObjectMapper getObjectMapper(Path filepath) {
+    public static  ObjectMapper getObjectMapper(Path filepath) {
         ObjectMapper mapper = null;
         if (filepath.toString().endsWith(".yml")) {
             mapper = new YAMLMapper();
