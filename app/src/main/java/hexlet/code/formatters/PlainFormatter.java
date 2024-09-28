@@ -37,7 +37,7 @@ public class PlainFormatter implements IFormatter {
                     break;
             }
         });
-        return sb.toString().replace("\n", "");
+        return sb.toString().replaceFirst("\n", "");
     }
 
     private static Object getIfComplexValue(Object object) {
