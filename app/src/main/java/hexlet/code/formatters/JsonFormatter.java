@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class JsonFormatter implements IFormatter {
+public final class JsonFormatter implements IFormatter {
     @Override
     public String format(Map<Object, Map<String, Object>> differMap) {
         LinkedHashMap<Object, Object> properties = new LinkedHashMap<>();

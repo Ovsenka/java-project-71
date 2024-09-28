@@ -12,23 +12,27 @@ import java.util.concurrent.Callable;
         description = "Compares two configuration files and shows a difference.",
         version = "gendiff 1.0"
         )
-public class App implements Callable<Integer> {
+public final class App implements Callable<Integer> {
 
     @Option(names = { "-f", "--format" },
             defaultValue = "stylish",
             paramLabel = "format",
             description = "output format [default: stylish]")
-    String format;
+    private String format;
 
     @Parameters(paramLabel = "filepath1", description = "path to first file")
-    String filepath;
+    private String filepath;
 
     @Parameters(paramLabel = "filepath2", description = "path to second file")
-    String filepath2;
+    private String filepath2;
 
     @Override
     public Integer call() throws Exception {
-        System.out.println(Differ.generate(filepath, filepath2, format));
+        System.out.println(Differ.generate(
+                getFilepath(),
+                getFilepath2(),
+                getFormat())
+        );
         return 0;
     }
     public static void main(String[] args) {
@@ -36,4 +40,15 @@ public class App implements Callable<Integer> {
         System.exit(exitCode);
     }
 
+    public String getFormat() {
+        return format;
+    }
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public String getFilepath2() {
+        return filepath2;
+    }
 }

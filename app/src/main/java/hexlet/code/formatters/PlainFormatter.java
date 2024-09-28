@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PlainFormatter implements IFormatter {
+public final class PlainFormatter implements IFormatter {
     @Override
     public String format(Map<Object, Map<String, Object>> differMap) {
         StringBuilder sb = new StringBuilder();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class StylishFormatter implements IFormatter {
+public final class StylishFormatter implements IFormatter {
     @Override
     public String format(Map<Object, Map<String, Object>> differMap) {
         StringBuilder result = new StringBuilder("{");
