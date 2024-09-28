@@ -1,68 +1,60 @@
-import static hexlet.code.Differ.generate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import hexlet.code.formatters.StylishFormatter;
-import org.junit.jupiter.api.BeforeAll;
+import hexlet.code.Differ;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 
 public class DifferTests {
 
-    private static String expectedDifferents = "";
-    private static StylishFormatter stylishFormatter = null;
-    @BeforeAll
-    public static void init() {
-        expectedDifferents = String.join("\n\t",
-                "{",
-                        "chars1: [a, b, c]",
-                        "- chars2: [d, e, f]",
-                        "+ chars2: false",
-                        "- checked: false",
-                        "+ checked: true",
-                        "- default: null",
-                        "+ default: [value1, value2]",
-                        "- id: 45",
-                        "+ id: null",
-                        "- key1: value1",
-                        "+ key2: value2",
-                        "numbers1: [1, 2, 3, 4]",
-                        "- numbers2: [2, 3, 4, 5]",
-                        "+ numbers2: [22, 33, 44, 55]",
-                        "- numbers3: [3, 4, 5]",
-                        "+ numbers4: [4, 5, 6]",
-                        "+ obj1: {nestedKey=value, isNested=true}",
-                        "- setting1: Some value",
-                        "+ setting1: Another value",
-                        "- setting2: 200",
-                        "+ setting2: 300",
-                        "- setting3: true",
-                        "+ setting3: none\n}");
-        stylishFormatter = new StylishFormatter();
-    }
+    private static final String YAML_PATH = "src/test/resources/test1.yml";
+    private static final String YAML_PATH2 = "src/test/resources/test2.yml";
+    private static final String JSON_PATH = "src/test/resources/test1.json";
+    private static final String JSON_PATH2 = "src/test/resources/test2.json";
 
     @Test
     public void jsonDiffTestStylish() {
-        Map<String, Object[]> diff = generate(
-                Paths.get("src/test/resources/test1.json").toAbsolutePath().normalize(),
-                Paths.get("src/test/resources/test2.json").toAbsolutePath().normalize()
-        );
 
-        assertEquals(stylishFormatter.format(diff),
-                expectedDifferents
+    }
+
+    @Test
+    public void jsonDiffTest() throws Exception {
+        assertEquals(
+                readFixture("stylishFixture"),
+                Differ.generate(JSON_PATH, JSON_PATH2, "stylish").trim()
+        );
+        assertEquals(
+                readFixture("jsonFixture"),
+                Differ.generate(JSON_PATH, JSON_PATH2, "json").trim()
+        );
+        assertEquals(
+                readFixture("plainFixture"),
+                Differ.generate(JSON_PATH, JSON_PATH2, "plain").trim()
         );
     }
 
     @Test
-    public void yamlDiffTestStylish() {
-        Map<String, Object[]> diff = generate(
-                Paths.get("src/test/resources/test1.yml").toAbsolutePath().normalize(),
-                Paths.get("src/test/resources/test2.yml").toAbsolutePath().normalize()
+    public void yamlDiffTest() throws Exception {
+        assertEquals(
+                readFixture("stylishFixture"),
+                Differ.generate(YAML_PATH, YAML_PATH2, "stylish").trim()
         );
-
-        assertEquals(stylishFormatter.format(diff),
-                expectedDifferents
+        assertEquals(
+                readFixture("jsonFixture"),
+                Differ.generate(YAML_PATH, YAML_PATH2, "json").trim()
+        );
+        assertEquals(
+                readFixture("plainFixture"),
+                Differ.generate(YAML_PATH, YAML_PATH2, "plain").trim()
         );
     }
+
+    private static String readFixture(String fileName) throws Exception {
+        Path filePath = Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+        return Files.readString(filePath).trim();
+    }
 }
+

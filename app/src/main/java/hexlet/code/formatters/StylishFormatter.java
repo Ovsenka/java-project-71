@@ -1,25 +1,30 @@
 package hexlet.code.formatters;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class StylishFormatter implements IFormatter {
     @Override
-    public String format(Map<String, Object[]> differMap) {
+    public String format(Map<String, Map<Object, Object>> differMap) {
         StringBuilder result = new StringBuilder("{");
         differMap.forEach((k, v) -> {
-            switch (v[0].toString()) {
-                case "none":
-                    result.append("\n\t").append(k).append(": ").append(v[1]);
+            switch (k) {
+                case "notchanged":
+                    v.forEach((key, value) -> result.append("\n ").append(key).append(": ").append(value));
                     break;
-                case "+":
-                    result.append("\n\t+ ").append(k).append(": ").append(v[1]);
+                case "add":
+                    v.forEach((key, value) -> result.append("\n + ").append(key).append(": ").append(v.get(key)));
                     break;
-                case "-":
-                    result.append("\n\t- ").append(k).append(": ").append(v[1]);
+                case "delete":
+                    v.forEach((key, value) -> result.append("\n - ").append(key).append(": ").append(v.get(key)));
                     break;
-                case "-+":
-                    result.append("\n\t- ").append(k).append(": ").append(v[1]);
-                    result.append("\n\t+ ").append(k).append(": ").append(v[2]);
+                case "changed":
+                    v.forEach((key, value) -> {
+                        Object resultValue = ((ArrayList<?>) value).get(0);
+                        Object resultValue2 = ((ArrayList<?>) value).get(1);
+                        result.append("\n - ").append(key).append(": ").append(resultValue);
+                        result.append("\n + ").append(key).append(": ").append(resultValue2);
+                    });
                     break;
                 default:
                     break;
