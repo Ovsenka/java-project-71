@@ -4,14 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class JsonFormatter implements IFormatter {
     @Override
-    public String format(Map<String, Map<Object, Object>> differMap) {
-        TreeMap<Object, Object> properties = new TreeMap<>();
-        differMap.forEach((k, v) -> properties.putAll(v));
+    public String format(Map<Object, Map<String, Object>> differMap) {
+        LinkedHashMap<Object, Object> properties = new LinkedHashMap<>();
+        differMap.forEach((k, v) -> {
+            var val = ((LinkedHashMap<String, Object>) v).firstEntry().getValue();
+            properties.put(k, val);
+        });
         ObjectMapper mapper = new JsonMapper();
         try {
             return mapper.writeValueAsString(properties);

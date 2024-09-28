@@ -1,30 +1,31 @@
 package hexlet.code.formatters;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class StylishFormatter implements IFormatter {
     @Override
-    public String format(Map<String, Map<Object, Object>> differMap) {
+    public String format(Map<Object, Map<String, Object>> differMap) {
         StringBuilder result = new StringBuilder("{");
         differMap.forEach((k, v) -> {
-            switch (k) {
+            Map.Entry<String, Object> pair = ((LinkedHashMap<String, Object>) v).firstEntry();
+            Object differValue = pair.getValue();
+            switch (pair.getKey()) {
                 case "notchanged":
-                    v.forEach((key, value) -> result.append("\n ").append(key).append(": ").append(value));
+                    result.append("\n    ").append(k).append(": ").append(differValue);
                     break;
                 case "add":
-                    v.forEach((key, value) -> result.append("\n + ").append(key).append(": ").append(v.get(key)));
+                    result.append("\n  + ").append(k).append(": ").append(differValue);
                     break;
                 case "delete":
-                    v.forEach((key, value) -> result.append("\n - ").append(key).append(": ").append(v.get(key)));
+                    result.append("\n  - ").append(k).append(": ").append(differValue);
                     break;
                 case "changed":
-                    v.forEach((key, value) -> {
-                        Object resultValue = ((ArrayList<?>) value).get(0);
-                        Object resultValue2 = ((ArrayList<?>) value).get(1);
-                        result.append("\n - ").append(key).append(": ").append(resultValue);
-                        result.append("\n + ").append(key).append(": ").append(resultValue2);
-                    });
+                    Object oldValue = ((ArrayList<?>) differValue).get(0);
+                    Object newValue = ((ArrayList<?>) differValue).get(1);
+                    result.append("\n  - ").append(k).append(": ").append(oldValue);
+                    result.append("\n  + ").append(k).append(": ").append(newValue);
                     break;
                 default:
                     break;
