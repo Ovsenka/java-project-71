@@ -14,20 +14,8 @@ public class Differ {
         Map<String, Object> mapFile = Parser.parse(filepath);
         Map<String, Object> mapFile2 = Parser.parse(filepath2);
 
-        IFormatter formatter = null;
+        IFormatter formatter;
         formatter = FormatterFactory.getFormatter(format);
-        return formatter.format(DiffBuilder.build(mapFile, mapFile2));
-    }
-
-    public static String generate(String pathToFile, String pathToFile2) throws Exception {
-        Path filepath = Paths.get(pathToFile).toAbsolutePath().normalize();
-        Path filepath2 = Paths.get(pathToFile2).toAbsolutePath().normalize();
-
-        Map<String, Object> mapFile = Parser.parse(filepath);
-        Map<String, Object> mapFile2 = Parser.parse(filepath2);
-
-        IFormatter formatter = null;
-        formatter = FormatterFactory.getFormatter("stylish");
         return formatter.format(DiffBuilder.build(mapFile, mapFile2));
     }
 }

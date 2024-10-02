@@ -29,26 +29,14 @@ public final class App implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         System.out.println(Differ.generate(
-                getFilepath(),
-                getFilepath2(),
-                getFormat())
+                filepath,
+                filepath2,
+                format)
         );
         return 0;
     }
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
-    }
-
-    public String getFormat() {
-        return format;
-    }
-
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public String getFilepath2() {
-        return filepath2;
     }
 }
