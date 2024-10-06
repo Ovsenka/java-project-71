@@ -32,11 +32,10 @@ report:
 	./gradlew jacocoTestReport
 
 lint:
-	cd app
 	./gradlew checkstyleMain
 
 check-deps:
-	app/gradlew dependencyUpdates -Drevision=release
+	./gradlew dependencyUpdates -Drevision=release
 
 
 build-run: build run
