@@ -18,4 +18,8 @@ public class Differ {
         formatter = FormatterFactory.getFormatter(format);
         return formatter.format(DiffBuilder.build(mapFile, mapFile2));
     }
+
+    public static String generate(String pathToFile, String pathToFile2) throws Exception {
+        return generate(pathToFile, pathToFile2, "stylish");
+    }
 }
