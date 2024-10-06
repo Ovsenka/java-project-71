@@ -20,7 +20,9 @@ jobs:
           build-root-directory: app
           gradle-version: 8.7
       - run: make lint
+        working-directory: ./app
       - run: make test
+        working-directory: ./app
       - name: Publish code coverage
         if: ${{ github.event_name == 'push' }}
         uses: paambaati/codeclimate-action@v3.0.0
@@ -29,5 +31,6 @@ jobs:
           JACOCO_SOURCE_PATH: ${{github.workspace}}/app/src/main/java
         with:
           debug: true
+          workingDirectory: ./app
           coverageCommand: make report
           coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
