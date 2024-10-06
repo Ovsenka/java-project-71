@@ -26,13 +26,16 @@ run:
 	app/gradlew run
 
 test:
-	app/gradlew test
+	cp app
+	./gradlew test
 
 report:
-	app/gradlew jacocoTestReport
+	cp app
+	./gradlew jacocoTestReport
 
 lint:
-	app/gradlew checkstyleMain
+	cd app
+	./gradlew checkstyleMain
 
 check-deps:
 	app/gradlew dependencyUpdates -Drevision=release
